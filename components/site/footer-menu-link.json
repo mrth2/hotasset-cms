@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_site_footer_menu_links",
+  "info": {
+    "name": "Footer Menu Link",
+    "icon": "align-center",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

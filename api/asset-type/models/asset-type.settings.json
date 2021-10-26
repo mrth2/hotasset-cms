@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asset_types",
+  "info": {
+    "name": "Asset Type",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "value": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "order": {
+      "type": "integer",
+      "default": 1
+    }
+  }
+}

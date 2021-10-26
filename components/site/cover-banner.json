@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_site_cover_banners",
+  "info": {
+    "name": "Cover Banner",
+    "icon": "ad"
+  },
+  "options": {},
+  "attributes": {
+    "cover_heading": {
+      "type": "string"
+    },
+    "cover_description": {
+      "type": "string"
+    },
+    "cover_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "assets",
+  "info": {
+    "name": "asset",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "resource": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "types": {
+      "collection": "asset-type"
+    },
+    "channels": {
+      "collection": "asset-channel"
+    },
+    "can_download": {
+      "type": "boolean"
+    },
+    "category": {
+      "model": "category"
+    },
+    "tags": {
+      "collection": "tag"
+    },
+    "likes": {
+      "type": "integer"
+    },
+    "upvoters": {
+      "via": "upvoted_assets",
+      "plugin": "users-permissions",
+      "collection": "user",
+      "dominant": true
+    }
+  }
+}
