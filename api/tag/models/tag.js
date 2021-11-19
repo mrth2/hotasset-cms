@@ -5,4 +5,16 @@
  * to customize this model
  */
 
-module.exports = {};
+module.exports = {
+  lifecycles: {
+    async beforeCreate(data) {
+      if (data.name) {
+        data.slug = await strapi.plugins['content-manager'].services.uid.generateUIDField({
+          contentTypeUID: 'application::tag.tag',
+          field: 'slug',
+          data
+        });
+      }
+    }
+  }
+};
