@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asset_mimes",
+  "info": {
+    "name": "Asset Mime"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "application": {
+      "type": "string"
+    },
+    "mimeType": {
+      "type": "string"
+    },
+    "fileExtension": {
+      "type": "string"
+    }
+  }
+}

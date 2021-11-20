@@ -22,6 +22,9 @@
     "order": {
       "type": "integer",
       "default": 1
+    },
+    "mimes": {
+      "collection": "asset-mime"
     }
   }
 }

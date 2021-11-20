@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/asset-mimes",
+      "handler": "asset-mime.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/asset-mimes/count",
+      "handler": "asset-mime.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/asset-mimes/:id",
+      "handler": "asset-mime.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/asset-mimes",
+      "handler": "asset-mime.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/asset-mimes/:id",
+      "handler": "asset-mime.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/asset-mimes/:id",
+      "handler": "asset-mime.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
