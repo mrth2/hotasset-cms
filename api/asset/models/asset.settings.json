@@ -37,7 +37,8 @@
       "collection": "asset-channel"
     },
     "can_download": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "category": {
       "model": "category"
@@ -46,13 +47,18 @@
       "collection": "tag"
     },
     "likes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "upvoters": {
       "via": "upvoted_assets",
       "plugin": "users-permissions",
       "collection": "user",
       "dominant": true
+    },
+    "author": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }
