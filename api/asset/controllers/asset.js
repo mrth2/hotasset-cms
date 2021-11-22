@@ -52,16 +52,24 @@ module.exports = {
   async create(ctx) {
     let entity;
 
-    const _tags = await autoSyncTags(ctx.request.body.tags);
-    if (_tags && _tags.length > 0) {
-      ctx.request.body.tags = _tags;
-    }
-
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
+
+      // sync missing tags
+      const _tags = await autoSyncTags(data.tags);
+      if (_tags && _tags.length > 0) {
+        data.tags = _tags;
+      }
+      // create asset with files
       data.author = ctx.state.user.id;
       entity = await strapi.services.asset.create(data, { files });
     } else {
+      // sync missing tags
+      const _tags = await autoSyncTags(ctx.request.body.tags);
+      if (_tags && _tags.length > 0) {
+        ctx.request.body.tags = _tags;
+      }
+      // create asset
       ctx.request.body.author = ctx.state.user.id;
       entity = await strapi.services.asset.create(ctx.request.body);
     }
@@ -72,11 +80,6 @@ module.exports = {
     const { id } = ctx.params;
 
     let entity;
-    
-    const _tags = await autoSyncTags(ctx.request.body.tags);
-    if (_tags && _tags.length > 0) {
-      ctx.request.body.tags = _tags;
-    }
 
     const [asset] = await strapi.services.asset.find({
       id: ctx.params.id,
@@ -125,10 +128,22 @@ module.exports = {
 
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
+      // sync missing tags
+      const _tags = await autoSyncTags(data.tags);
+      if (_tags && _tags.length > 0) {
+        data.tags = _tags;
+      }
+      // update asset with files
       entity = await strapi.services.asset.update({ id }, data, {
         files,
       });
     } else {
+      // sync missing tags
+      const _tags = await autoSyncTags(ctx.request.body.tags);
+      if (_tags && _tags.length > 0) {
+        ctx.request.body.tags = _tags;
+      }
+      // update asset
       entity = await strapi.services.asset.update({ id }, ctx.request.body);
     }
 
