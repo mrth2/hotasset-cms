@@ -5,11 +5,58 @@
  * to customize this controller
  */
 const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
+const _ = require('lodash');
+
+async function autoSyncTags(tags) {
+  if (!tags || tags.length === 0) return []
+  // check if tags need to be created
+  // console.log('tags', tags);
+  // find tags that has name => add these tags to database
+  let newTags = []
+  let oldTags = []
+  tags.forEach(tag => {
+    if (typeof tag.name !== 'undefined') newTags.push(tag)
+    else oldTags.push(tag)
+  })
+  // console.log('new tags', newTags);
+  // console.log('old tags', oldTags)
+  // check tags already exists
+  const existingTags = await strapi.query('tag').find({ name_in: newTags.map(tag => tag.name) });
+  // console.log('existing tags', existingTags);
+  // all tags is not existed => create missing tags
+  if (existingTags.length <= newTags.length) {
+    newTags = newTags.filter(tag => existingTags.find(existingTag => existingTag.name === tag.name) === undefined);
+    // console.log('real new tags', newTags);
+
+    const createdTags = []
+    // add new tags to database
+    for (const tag of newTags) {
+      const newTag = await strapi.services.tag.create({
+        name: tag.name
+      })
+      // console.log('newTag', newTag)
+      if (newTag.id) {
+        createdTags.push(newTag.id);
+      }
+    }
+    // console.log('createdTags', createdTags);
+    // update old tags with new tags created
+    return _.uniq([...oldTags, ...existingTags.map(t => t.id), ...createdTags])
+  }
+  // return list of tag ids
+  return _.uniq([...oldTags])
+}
 
 module.exports = {
   // override create controller to auto append author id
   async create(ctx) {
     let entity;
+
+    const _tags = await autoSyncTags(ctx.request.body.tags);
+    if (_tags && _tags.length > 0) {
+      ctx.request.body.tags = _tags;
+    }
+
     if (ctx.is('multipart')) {
       const { data, files } = parseMultipartData(ctx);
       data.author = ctx.state.user.id;
@@ -25,6 +72,11 @@ module.exports = {
     const { id } = ctx.params;
 
     let entity;
+    
+    const _tags = await autoSyncTags(ctx.request.body.tags);
+    if (_tags && _tags.length > 0) {
+      ctx.request.body.tags = _tags;
+    }
 
     const [asset] = await strapi.services.asset.find({
       id: ctx.params.id,
@@ -85,8 +137,6 @@ module.exports = {
   // override delete controller to auto check for owner
   async delete(ctx) {
     const { id } = ctx.params;
-
-    let entity;
 
     const [asset] = await strapi.services.asset.find({
       id: ctx.params.id,
