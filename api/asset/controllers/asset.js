@@ -106,6 +106,7 @@ module.exports = {
         }
         if (upvoters.length === 1 && upvoters[0] === ctx.state.user.id) {
           entity = await strapi.services.asset.update({ id }, {
+            likes: currentUpvoterWithoutUser.length + 1,
             upvoters: [
               ctx.state.user._id,
               ...currentUpvoterWithoutUser,
@@ -115,6 +116,7 @@ module.exports = {
         // check if user is not upvoter
         else if (upvoters.length === 0) {
           entity = await strapi.services.asset.update({ id }, {
+            likes: currentUpvoterWithoutUser.length,
             upvoters: currentUpvoterWithoutUser
           })
         }

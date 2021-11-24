@@ -41,9 +41,6 @@
       "type": "boolean",
       "default": true
     },
-    "category": {
-      "model": "category"
-    },
     "tags": {
       "collection": "tag"
     },
@@ -60,6 +57,9 @@
     "author": {
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "categories": {
+      "collection": "category"
     }
   }
 }
