@@ -15,9 +15,12 @@ async function autoSyncTags(tags) {
   let newTags = []
   let oldTags = []
   tags.forEach(tag => {
+    if (!tag) return
     if (typeof tag.name !== 'undefined') newTags.push(tag)
     else oldTags.push(tag)
   })
+  // none new or old tags to sync
+  if (!newTags.length && !oldTags.length) return []
   // console.log('new tags', newTags);
   // console.log('old tags', oldTags)
   // check tags already exists
