@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_page_statics",
+  "info": {
+    "name": "static",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cover": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "SEO": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.metadata"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}
