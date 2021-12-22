@@ -30,5 +30,19 @@ module.exports = {
       })
     }
     return sanitizeEntity(entity, { model: strapi.models['user-followers'] });
+  },
+  async delete(ctx) {
+    // the target user to unfollow by current logged in user
+    const { id: userId } = ctx.params;
+    const user = await strapi.query('user', 'users-permissions').findOne({ id: userId });
+    if (!user) {
+      return ctx.badRequest(null, { messages: 'No user to unfollow!' });
+    }
+    // remove the follower relation
+    const entity = await strapi.query('user-followers').delete({ 
+      user : userId,
+      follower: ctx.state.user.id,
+    });
+    return sanitizeEntity(entity, { model: strapi.models['user-followers'] });
   }
 };
